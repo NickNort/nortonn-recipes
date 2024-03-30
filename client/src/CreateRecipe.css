@@ -1,0 +1,9 @@
+.create-recipe {
+	background-color: #282c34;
+	color: white;
+}
+
+.create-recipe label {
+	display: block;
+	margin-bottom: 10px;
+}
