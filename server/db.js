@@ -1,14 +1,3 @@
-
-// // import sqlite
-// import sqlite3 from 'sqlite3';
-// // create database connection
-// const db = new sqlite3.Database('../db/project348.sqlite', (err) => {
-// 	if (err) {
-// 		return console.error(err.message);
-// 	}
-// 	console.log('Connected to the database.');
-// });
-
 // import sqlite
 import sqlite3 from 'sqlite3';
 // create database connection
