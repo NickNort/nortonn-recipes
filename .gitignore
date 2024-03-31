@@ -3,6 +3,9 @@
 # my old garbage
 /oldserver
 
+# settings for restore terminals
+/.vscode
+
 # dependencies
 /client/node_modules
 /server/node_modules

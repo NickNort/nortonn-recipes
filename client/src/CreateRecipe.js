@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CreateRecipe.css';
 import axios from 'axios';
+import Header from "./Components/Header.js";
 
 function CreateRecipe() {
   const [name, setName] = useState('');
@@ -43,8 +44,10 @@ const handleSubmit = () => {
 
 
   return (
+    <>
+    <Header />
     <div className="create-recipe">
-      <form>
+      {/* <form> */}
         <label>
           Recipe Name:
           <input type="text" value={name} onChange={e => setName(e.target.value)} />
@@ -61,9 +64,10 @@ const handleSubmit = () => {
           Instructions:
           <textarea value={instructions} onChange={e => setInstructions(e.target.value)} />
         </label>
-        <input type="button" value="Submit" onClick={handleSubmit}/>
-      </form>
+        <input className="subButton" type="button" value="Submit" onClick={handleSubmit}/>
+      {/* </form> */}
     </div>
+    </>
   );
 }
 
