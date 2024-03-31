@@ -57,7 +57,7 @@
   justify-content: center;
 }
 
-.create-recipe-button {
+.create-recipe-button, .view-db-button, .update-entry-button, .delete-entry-button {
 	height: 50px;
   width: 100%;
   margin: 2px;
@@ -65,10 +65,10 @@
   cursor: pointer;
 }
 
-.view-db-button {
+/* .view-db-button {
 	height: 50px;
   width: 100%;
   margin: 2px;
 	background-color: #afafaf;
   cursor: pointer;
-}
+} */

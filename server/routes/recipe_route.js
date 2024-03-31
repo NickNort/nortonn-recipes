@@ -6,5 +6,8 @@ const uri = '/recipes';
 
 recipeRouter.post(`${uri}/create`, RecipeController.createRecipe);
 recipeRouter.get(uri, RecipeController.getRecipes);
+recipeRouter.get(`${uri}/getRecipe`, RecipeController.getRecipe);
+recipeRouter.delete(uri, RecipeController.deleteRecipe);
+recipeRouter.put(uri, RecipeController.updateRecipe);
 
 export default recipeRouter;

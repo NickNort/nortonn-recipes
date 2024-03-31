@@ -5,6 +5,9 @@ import CreateRecipe from './CreateRecipe';
 import Header from './Components/Header';
 import { useNavigate } from 'react-router-dom';
 import ViewDb from './ViewDb';
+import UpdateEntry from './UpdateEntry';
+import DeleteEntry from './DeleteEntry';
+import UpdateEntryID from './UpdateEntryID';
 // import getRecipes from './ViewDb';
 
 // function MainPage() {
@@ -31,8 +34,13 @@ function MainPage2() {
           Create Recipe
         </button>
         <button className='view-db-button' onClick={() => {navigate('/view-db');}}>
-        {/* <button className='view-db-button' onClick={() => {getRecipes();}}> */}
           View Data
+        </button>
+        <button className='update-entry-button' onClick={() => {navigate('/update-entry');}}>
+          Update Entry
+        </button>
+        <button className='delete-entry-button' onClick={() => {navigate('/delete-entry');}}>
+          Delete Entry
         </button>
       </div>
     </>
@@ -47,6 +55,9 @@ function App() {
           <Route path="/" element={<MainPage2 />} />
           <Route path="/create-recipe" element={<CreateRecipe />} />
           <Route path="/view-db" element={<ViewDb />} />
+          <Route path="/update-entry" element={<UpdateEntry />} />
+          <Route path="/update-entry-id" element={<UpdateEntryID />} />
+          <Route path="/delete-entry" element={<DeleteEntry />} />
         </Routes>
       </div>
     </Router>

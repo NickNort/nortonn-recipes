@@ -1,36 +1,20 @@
 import React, { useState } from 'react';
 import Header from "./Components/Header.js";
 import axios from 'axios';
-import './CreateRecipe.css';
+import { useHistory } from 'react-router-dom';
+import './UpdateEntryID.css';
 
-function CreateRecipe() {
+function UpdateEntryID() {
   const [name, setName] = useState('');
   const [estimatedTime, setEstimatedTime] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Here you would handle the form submission, e.g. send data to your server
-  //   console.log(name, estimatedTime, ingredients, instructions);
-  // };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  
-  //   const recipe = { name, estimatedTime, ingredients, instructions };
-  
-  //   try {
-  //     const response = await axios.post('/api/recipes', recipe);
-  
-  //     console.log('Recipe saved successfully:', response.data);
-  //   } catch (error) {
-  //     console.error('Error saving recipe:', error.response.statusText);
-  //   }
-  // };
+  const history = useHistory();
+  const idToUpdate = history.location.state.recipeId;
 
 const handleSubmit = () => {
-  axios.post('http://localhost:8080/recipes/create', {
+  axios.post(`http://localhost:8080/recipes?recipe_id=${idToUpdate}`, {
     name: name,
     estimatedTime: estimatedTime,
     ingredients: ingredients,
@@ -46,7 +30,7 @@ const handleSubmit = () => {
   return (
     <>
     <Header />
-    <div className="create-recipe">
+    <div className="update-recipe-id">
       {/* <form> */}
         <label>
           Recipe Name:
@@ -71,4 +55,4 @@ const handleSubmit = () => {
   );
 }
 
-export default CreateRecipe;
+export default UpdateEntryID;
