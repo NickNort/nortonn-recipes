@@ -15,3 +15,33 @@ export const createRecipe = (req, res) => {
 		return res.send("An error occurred. Please try again.");
 	}
 };
+
+// export const getRecipes = (req, res) => {
+// 	console.log("===getRecipes===");
+// 	try {
+// 		db.all('SELECT * FROM recipes', (error, rows) => {
+// 			if (error) {
+// 				console.log(error);
+// 				return res.send("An error occurred. Please try again.");
+// 			}
+
+// 			console.log("rows: " + rows);
+// 			return res.json(rows);
+// 		});
+// 	} catch (error) {
+// 		console.log(error);
+// 		return res.send("An error occurred. Please try again.");
+// 	}
+// };
+
+export const getRecipes = (req, res) => {
+	console.log("===getRecipes===");
+	try {
+		db.all('SELECT * FROM recipes').then((rows) => {
+			return res.json(rows);
+		});
+	} catch (error) {
+		console.log(error);
+		return res.send("An error occurred. Please try again.");
+	}
+};

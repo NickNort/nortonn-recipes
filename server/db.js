@@ -26,6 +26,19 @@ export const run = (sql, params) => {
 	});
 }
 
-console.log('db in db.js:', db);
+export const all = (sql, params) => {
+	return new Promise((resolve, reject) => {
+		db.all(sql, params, (err, rows) => {
+			if (err) {
+				console.log('Error running sql: ' + sql);
+				console.log(err);
+				reject(err);
+			} else {
+				resolve(rows);
+			}
+		});
+	});
+}
+
 
 export default db;

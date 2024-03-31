@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import CreateRecipe from './CreateRecipe';
 import Header from './Components/Header';
 import { useNavigate } from 'react-router-dom';
+import ViewDb from './ViewDb';
+// import getRecipes from './ViewDb';
 
 // function MainPage() {
 //   return (
@@ -29,6 +31,7 @@ function MainPage2() {
           Create Recipe
         </button>
         <button className='view-db-button' onClick={() => {navigate('/view-db');}}>
+        {/* <button className='view-db-button' onClick={() => {getRecipes();}}> */}
           View Data
         </button>
       </div>
@@ -43,6 +46,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage2 />} />
           <Route path="/create-recipe" element={<CreateRecipe />} />
+          <Route path="/view-db" element={<ViewDb />} />
         </Routes>
       </div>
     </Router>
