@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import Header from "./Components/Header.js";
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import './UpdateEntryID.css';
 
 function UpdateEntryID() {
-  const [name, setName] = useState('');
-  const [estimatedTime, setEstimatedTime] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const [instructions, setInstructions] = useState('');
+  const [name, setName] = useState(localStorage.getItem('recipeName'));
+  const [estimatedTime, setEstimatedTime] = useState(localStorage.getItem('recipeTime'));
+  const [ingredients, setIngredients] = useState(localStorage.getItem('recipeIngredients'));
+  const [instructions, setInstructions] = useState(localStorage.getItem('recipeInstructions'));
 
-  const history = useHistory();
-  const idToUpdate = history.location.state.recipeId;
+  // const history = useHistory();
+  // const idToUpdate = history.location.state.recipeId;
+  const idToUpdate = localStorage.getItem('recipeId');
 
 const handleSubmit = () => {
-  axios.post(`http://localhost:8080/recipes?recipe_id=${idToUpdate}`, {
+  axios.put(`http://localhost:8080/recipes?recipe_id=${idToUpdate}`, {
     name: name,
     estimatedTime: estimatedTime,
     ingredients: ingredients,

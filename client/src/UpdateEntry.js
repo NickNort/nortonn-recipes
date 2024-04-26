@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import Header from './Components/Header';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import './UpdateEntry.css';
+// import UpdateEntryID from './UpdateEntryID';
+import { useNavigate } from 'react-router-dom';
 
 function UpdateEntry() {
 	const [recipeId, setRecipeId] = useState('');
 	const [response, setResponse] = useState(null);
+
+	const navigate = useNavigate();
 
 	const handleInputChange = (event) => {
 		setRecipeId(event.target.value);
@@ -16,7 +20,14 @@ function UpdateEntry() {
 		axios.get(`http://localhost:8080/recipes/getRecipe?recipe_id=${recipeId}`)
 		.then(response => {
 			setResponse(response);
-			history.pushState('/update-entry-id', { recipeId: recipeId });
+			console.log(response.data[0]);
+			localStorage.setItem('recipeId', recipeId);
+			localStorage.setItem('recipeName', response.data[0].name);
+			localStorage.setItem('recipeTime', response.data[0].estimated_time);
+			localStorage.setItem('recipeIngredients', response.data[0].ingredients);
+			localStorage.setItem('recipeInstructions', response.data[0].instructions);
+			
+			navigate('/update-entry-id');
 		}).catch(error => {
 			console.log(error);
 		});
@@ -25,6 +36,7 @@ function UpdateEntry() {
 	// Prompt the user for new values
 	const promptForNewValues = () => {
 		// Implement your logic here to prompt the user for new values
+		navigate('/update-entry-id');
 	};
 
 	return (
@@ -37,7 +49,6 @@ function UpdateEntry() {
 				</label>
 				<button className='subButton' onClick={() => {
 					handleSubmit();
-					promptForNewValues(); // Call the promptForNewValues function after handleSubmit
 				}}>Submit</button>
 		</div>
 		</>

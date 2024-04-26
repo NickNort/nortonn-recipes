@@ -54,7 +54,8 @@ export const deleteRecipe = (req, res) => {
 export const updateRecipe = (req, res) => {
 	console.log("===updateRecipe===");
 	try {
-		db.run('UPDATE recipes SET name = ?, estimated_time = ?, ingredients = ?, instructions = ? WHERE id = ?', [req.body.name, req.body.estimatedTime, req.body.ingredients, req.body.instructions, req.body.id]);
+		console.log(req.body);
+		db.run('UPDATE recipes SET name = ?, estimated_time = ?, ingredients = ?, instructions = ? WHERE id = ?', [req.body.name, req.body.estimatedTime, req.body.ingredients, req.body.instructions, req.query.recipe_id]);
 		return res.send('Recipe updated!');
 	} catch (error) {
 		console.log(error);
