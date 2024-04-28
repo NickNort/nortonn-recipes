@@ -1,17 +1,28 @@
 import * as db from '../db.js';
+import sequelize from '../orm.js';
+import Recipe from '../models/recipe.js';
 
-export const createRecipe = (req, res) => {
+export const createRecipe = async (req, res) => {
 	console.log("\n===createRecipe===\n");
+	const t = await sequelize.transaction();
 	try {
 		// DEBUGGING:
 		console.log(req.body);
-		console.log("db in createRecipe: ", db);
+		console.log("db in createRecipe: ", sequelize);
 
-		db.run('INSERT INTO recipes (name, estimated_time, ingredients, instructions) VALUES (?, ?, ?, ?)', [req.body.name, req.body.estimatedTime, req.body.ingredients, req.body.instructions]);
+		await Recipe.create({
+			name: req.body.name,
+			estimated_time: req.body.estimatedTime,
+			ingredients: req.body.ingredients,
+			instructions: req.body.instructions
+		}, { transaction: t });
+
+		await t.commit();
 
 		return res.send('Recipe created!');
 	} catch (error) {
 		console.log(error);
+		await t.rollback();
 		return res.send("An error occurred. Please try again.");
 	}
 };

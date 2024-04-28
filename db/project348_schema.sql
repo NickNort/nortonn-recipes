@@ -1,14 +1,13 @@
-CREATE TABLE example(
-	id SERIAL NOT NULL,
-	some_text TEXT,
-	PRIMARY KEY (id)
-);
+-- CREATE TABLE example(
+-- 	id SERIAL NOT NULL,
+-- 	some_text TEXT,
+-- 	PRIMARY KEY (id)
+-- );
 
-INSERT INTO example
-	VALUES
-	(0, 'Hello!'),
-	(1, 'Goodbye!');
-
+-- INSERT INTO example
+-- 	VALUES
+-- 	(0, 'Hello!'),
+-- 	(1, 'Goodbye!');
 
 CREATE TABLE recipes(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
