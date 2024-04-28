@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Router } from 'express';
 import recipeRouter from "./routes/recipe_route.js";
+import sequelize from "./orm.js";
 
 const app = express();
 
