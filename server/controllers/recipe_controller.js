@@ -62,14 +62,27 @@ export const deleteRecipe = (req, res) => {
 	}
 };
 
-export const updateRecipe = (req, res) => {
+export const updateRecipe = async (req, res) => {
 	console.log("===updateRecipe===");
+	const t = await sequelize.transaction();
 	try {
 		console.log(req.body);
-		db.run('UPDATE recipes SET name = ?, estimated_time = ?, ingredients = ?, instructions = ? WHERE id = ?', [req.body.name, req.body.estimatedTime, req.body.ingredients, req.body.instructions, req.query.recipe_id]);
+		await Recipe.update({
+			name: req.body.name,
+			estimated_time: req.body.estimatedTime,
+			ingredients: req.body.ingredients,
+			instructions: req.body.instructions
+		}, {
+			where: { id: req.query.recipe_id },
+			transaction: t
+		});
+
+		await t.commit();
+
 		return res.send('Recipe updated!');
 	} catch (error) {
 		console.log(error);
+		await t.rollback();
 		return res.send("An error occurred. Please try again.");
 	}
 }
