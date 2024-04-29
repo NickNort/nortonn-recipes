@@ -43,9 +43,13 @@ INSERT INTO categories(name)
 CREATE TABLE users(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT NOT NULL,
-	password TEXT NOT NULL,
+	pword TEXT NOT NULL,
 	email TEXT NOT NULL
 );
+
+INSERT INTO users(username, pword, email)
+	VALUES
+	('test', 'test', 'test@test.com');
 
 CREATE TABLE ratings(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
