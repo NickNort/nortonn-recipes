@@ -26,6 +26,20 @@ CREATE TABLE categories(
 	name TEXT NOT NULL
 );
 
+INSERT INTO categories(name)
+	VALUES
+	('Appetizer'),
+	('Breakfast'),
+	('Dessert'),
+	('Dinner'),
+	('Drink'),
+	('Lunch'),
+	('Salad'),
+	('Sandwich'),
+	('Side'),
+	('Snack'),
+	('Soup');
+
 CREATE TABLE users(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT NOT NULL,

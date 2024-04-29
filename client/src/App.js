@@ -26,6 +26,7 @@ import UpdateEntryID from './UpdateEntryID';
 
 function MainPage2() {
   const navigate = useNavigate();
+
   return (
     <>
       <Header />

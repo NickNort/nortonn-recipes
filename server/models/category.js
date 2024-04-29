@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../database'; // Assuming you have a Sequelize instance named 'sequelize'
+import sequelize from '../orm.js';
 
 const Category = sequelize.define('Category', {
 	id: {

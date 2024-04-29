@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "./Components/Header.js";
 import axios from 'axios';
 import './CreateRecipe.css';
@@ -8,6 +8,27 @@ function CreateRecipe() {
   const [estimatedTime, setEstimatedTime] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  // axios.get('http://localhost:8080/categories')
+  // .then(response => {
+  //   console.log(response);
+  //   // localStorage.setItem('categories', JSON.stringify(response.data));
+  //   setCategories(response.data);
+  // }).catch(error => {
+  //   console.log(error);
+  // });
+
+  useEffect(() => {
+  axios.get('http://localhost:8080/categories')
+    .then(response => {
+      setCategories(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}, []); // The empty array means this effect will run once when the component mounts
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -52,6 +73,19 @@ const handleSubmit = () => {
           Recipe Name:
           <input type="text" value={name} onChange={e => setName(e.target.value)} />
         </label>
+        {/* <label>
+          Category:
+          <textarea value={instructions} onChange={e => setInstructions(e.target.value)} />
+        </label> */}
+        <label>
+        Category:
+        <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
+          <option value="">Select a category</option>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>{category.name}</option>
+          ))}
+        </select>
+      </label>
         <label>
           Estimated Time (in minutes):
           <input type="text" value={estimatedTime} onChange={e => setEstimatedTime(e.target.value)} />
