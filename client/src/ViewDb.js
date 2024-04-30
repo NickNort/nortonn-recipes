@@ -5,17 +5,38 @@ import './ViewDb.css';
 
 const ViewDb = () => {
 	const [recipes, setRecipes] = useState([]);
+	const [categories, setCategories] = useState([]);
+  	const [selectedCategory, setSelectedCategory] = useState('');
 
 	useEffect(() => {
-		axios.get('http://localhost:8080/recipes')
+		axios.get('http://localhost:8080/categories')
 		.then(response => {
-			console.log(response.data);
-			setRecipes(response.data);
+			setCategories(response.data);
 		})
 		.catch(error => {
 			console.log(error);
 		});
 	}, []);
+
+	useEffect(() => {
+		if (selectedCategory === '') {
+			axios.get('http://localhost:8080/recipes')
+				.then(response => {
+					setRecipes(response.data);
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		} else {
+			axios.get(`http://localhost:8080/recipes/getByCategory?category=${selectedCategory}`)
+				.then(response => {
+					setRecipes(response.data);
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		}
+	}, [selectedCategory]);
 
 	console.log("recipes:" + recipes);
 
@@ -23,6 +44,16 @@ const ViewDb = () => {
 		<>
 		<Header />
 			<div className='recipes-title'>Recipes:</div>
+			<div className='category-selector'>
+				<select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+					<option value=''>All Categories</option>
+					{categories.map((category) => (
+						<option key={category.id} value={category.categoryName}>
+							{category.categoryName}
+						</option>
+					))}
+				</select>
+			</div>
 			<div className='table-container'>
 			<table>
 				<thead>
@@ -31,7 +62,6 @@ const ViewDb = () => {
 						<th>Name</th>
 						<th>Estimated Time</th>
 						<th>Category</th>
-						{/* <th>Creator ID</th> */}
 						<th>Ingredients</th>
 						<th>Instructions</th>
 					</tr>
@@ -43,7 +73,6 @@ const ViewDb = () => {
 							<td>{recipe.recipeName}</td>
 							<td>{recipe.estimated_time}</td>
 							<td>{recipe.category}</td>
-							{/* <td>{recipe.creator_id}</td> */}
 							<td>{recipe.ingredients}</td>
 							<td>{recipe.instructions}</td>
 						</tr>

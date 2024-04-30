@@ -9,5 +9,6 @@ recipeRouter.get(uri, RecipeController.getRecipes);
 recipeRouter.get(`${uri}/getRecipe`, RecipeController.getRecipe);
 recipeRouter.delete(uri, RecipeController.deleteRecipe);
 recipeRouter.put(uri, RecipeController.updateRecipe);
+recipeRouter.get(`${uri}/getByCategory`, RecipeController.getRecipesByCategory);
 
 export default recipeRouter;

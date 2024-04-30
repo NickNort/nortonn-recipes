@@ -1,4 +1,4 @@
-CREATE TABLE recipes(
+CREATE TABLE IF NOT EXISTS recipes(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	creator_id INTEGER,
 	category INTEGER,
@@ -10,7 +10,7 @@ CREATE TABLE recipes(
 	FOREIGN KEY (category) REFERENCES Categories(id)
 );
 
-CREATE TABLE categories(
+CREATE TABLE IF NOT EXISTS categories(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	categoryName TEXT NOT NULL
 );
@@ -29,7 +29,10 @@ INSERT INTO categories(categoryName)
 	('Snack'),
 	('Soup');
 
-CREATE TABLE users(
+CREATE UNIQUE INDEX IF NOT EXISTS idx_categoryName ON categories(id, categoryName);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_recipeName ON recipes(id, recipeName, category);
+
+CREATE TABLE IF NOT EXISTS users(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT NOT NULL,
 	pword TEXT NOT NULL,
@@ -40,7 +43,7 @@ INSERT INTO users(username, pword, email)
 	VALUES
 	('test', 'test', 'test@test.com');
 
-CREATE TABLE ratings(
+CREATE TABLE IF NOT EXISTS ratings(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	recipe_id INTEGER,
 	user_id INTEGER,

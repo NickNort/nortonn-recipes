@@ -31,21 +31,6 @@ export const createRecipe = async (req, res) => {
 export const getRecipes = (req, res) => {
 	console.log("===getRecipes===");
 	try {
-		// db.all('SELECT * FROM recipes').then((rows) => {
-		// 	console.log(rows);
-		// 	const promises = rows.map((recipe) => {
-		// 		return db.run('SELECT categoryName FROM categories WHERE id = ?', [recipe.category]).then((category) => {
-		// 			recipe.category = category.categoryName;
-		// 			return recipe;
-		// 		});
-		// 	});
-
-		// 	Promise.all(promises).then((updatedRows) => {
-		// 		console.log(rows);
-		// 		console.log(updatedRows);
-		// 		return res.json(updatedRows);
-		// 	});
-		// });
 		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as category, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id').then((rows) => {
 			return res.json(rows);
 		});
@@ -59,12 +44,18 @@ export const getRecipe = (req, res) => {
 	console.log("===getRecipe===");
 	try {
 		db.all('SELECT * FROM recipes WHERE id = ?', [req.query.recipe_id]).then((rows) => {
-		// 	const recipe = rows[0];
-		// 	db.run('SELECT categoryName FROM categories WHERE id = ?', [recipe.category]).then((category) => {
-		// 		recipe.category = category.categoryName;
-		// 		return res.json(recipe);
-		// 	});
-		// });
+			return res.json(rows);
+		});
+	} catch (error) {
+		console.log(error);
+		return res.send("An error occurred. Please try again.");
+	}
+}
+
+export const getRecipesByCategory = (req, res) => {
+	console.log("===getRecipesByCategory===");
+	try {
+		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as category, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ?', [req.query.category]).then((rows) => {
 			return res.json(rows);
 		});
 	} catch (error) {
