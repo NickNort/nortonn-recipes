@@ -55,7 +55,7 @@ export const getRecipe = (req, res) => {
 export const getRecipesSimple = (req, res) => {
 	console.log("===getRecipesSimple===");
 	try {
-		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id').then((rows) => {
+		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id ORDER BY r.id ASC').then((rows) => {
 			return res.json(rows);
 		});
 	} catch (error) {
@@ -79,7 +79,7 @@ export const getRecipeSimple = (req, res) => {
 export const getRecipesByCategory = (req, res) => {
 	console.log("===getRecipesByCategory===");
 	try {
-		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as categoryName, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ?', [req.query.category]).then((rows) => {
+		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as categoryName, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ? ORDER BY r.id ASC', [req.query.category]).then((rows) => {
 			return res.json(rows);
 		});
 	} catch (error) {
@@ -91,7 +91,7 @@ export const getRecipesByCategory = (req, res) => {
 export const getRecipesByCategorySimple = (req, res) => {
 	console.log("===getRecipesByCategorySimple===");
 	try {
-		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ?', [req.query.category]).then((rows) => {
+		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ? ORDER BY r.id ASC', [req.query.category]).then((rows) => {
 			return res.json(rows);
 		});
 	} catch (error) {
@@ -100,13 +100,21 @@ export const getRecipesByCategorySimple = (req, res) => {
 	}
 }
 
-export const deleteRecipe = (req, res) => {
+export const deleteRecipe = async (req, res) => {
 	console.log("===deleteRecipe===");
+	const t = await sequelize.transaction();
 	try {
-		db.run('DELETE FROM recipes WHERE id = ?', [req.query.recipe_id]);
+		await Recipe.destroy({
+			where: { id: req.query.recipe_id },
+			transaction: t
+		});
+
+		await t.commit();
+
 		return res.send('Recipe deleted!');
 	} catch (error) {
 		console.log(error);
+		await t.rollback();
 		return res.send("An error occurred. Please try again.");
 	}
 };
