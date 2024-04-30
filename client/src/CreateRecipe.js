@@ -11,15 +11,6 @@ function CreateRecipe() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
 
-  // axios.get('http://localhost:8080/categories')
-  // .then(response => {
-  //   console.log(response);
-  //   // localStorage.setItem('categories', JSON.stringify(response.data));
-  //   setCategories(response.data);
-  // }).catch(error => {
-  //   console.log(error);
-  // });
-
   useEffect(() => {
   axios.get('http://localhost:8080/categories')
     .then(response => {
@@ -28,7 +19,7 @@ function CreateRecipe() {
     .catch(error => {
       console.log(error);
     });
-}, []); // The empty array means this effect will run once when the component mounts
+}, []);
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -52,7 +43,8 @@ function CreateRecipe() {
 
 const handleSubmit = () => {
   axios.post('http://localhost:8080/recipes/create', {
-    name: name,
+    recipeName: name,
+    category: selectedCategory,
     estimatedTime: estimatedTime,
     ingredients: ingredients,
     instructions: instructions
@@ -68,21 +60,16 @@ const handleSubmit = () => {
     <>
     <Header />
     <div className="create-recipe">
-      {/* <form> */}
         <label>
           Recipe Name:
           <input type="text" value={name} onChange={e => setName(e.target.value)} />
         </label>
-        {/* <label>
-          Category:
-          <textarea value={instructions} onChange={e => setInstructions(e.target.value)} />
-        </label> */}
         <label>
         Category:
         <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
           <option value="">Select a category</option>
           {categories.map(category => (
-            <option key={category.id} value={category.id}>{category.name}</option>
+            <option key={category.id} value={category.id}>{category.categoryName}</option>
           ))}
         </select>
       </label>
@@ -99,7 +86,6 @@ const handleSubmit = () => {
           <textarea value={instructions} onChange={e => setInstructions(e.target.value)} />
         </label>
         <input className="subButton" type="button" value="Submit" onClick={handleSubmit}/>
-      {/* </form> */}
     </div>
     </>
   );

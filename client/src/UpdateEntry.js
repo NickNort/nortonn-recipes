@@ -22,7 +22,8 @@ function UpdateEntry() {
 			setResponse(response);
 			console.log(response.data[0]);
 			localStorage.setItem('recipeId', recipeId);
-			localStorage.setItem('recipeName', response.data[0].name);
+			localStorage.setItem('recipeName', response.data[0].recipeName);
+			localStorage.setItem('recipeCategory', response.data[0].category);
 			localStorage.setItem('recipeTime', response.data[0].estimated_time);
 			localStorage.setItem('recipeIngredients', response.data[0].ingredients);
 			localStorage.setItem('recipeInstructions', response.data[0].instructions);

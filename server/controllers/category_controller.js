@@ -28,6 +28,7 @@ export const getCategories = (req, res) => {
 	console.log("===getCategories===");
 	try {
 		db.all('SELECT * FROM categories').then((rows) => {
+			// console.log(rows);
 			return res.json(rows);
 		});
 	} catch (error) {

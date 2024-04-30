@@ -23,7 +23,7 @@ const Recipe = sequelize.define('Recipe', {
 			key: 'id'
 		}
 	},
-	name: {
+	recipeName: {
 		type: DataTypes.STRING,
 		allowNull: false
 	},

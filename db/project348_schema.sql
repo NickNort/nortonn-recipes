@@ -1,19 +1,8 @@
--- CREATE TABLE example(
--- 	id SERIAL NOT NULL,
--- 	some_text TEXT,
--- 	PRIMARY KEY (id)
--- );
-
--- INSERT INTO example
--- 	VALUES
--- 	(0, 'Hello!'),
--- 	(1, 'Goodbye!');
-
 CREATE TABLE recipes(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	creator_id INTEGER,
 	category INTEGER,
-	name TEXT NOT NULL,
+	recipeName TEXT NOT NULL,
 	estimated_time INTEGER,
 	ingredients TEXT NOT NULL,
 	instructions TEXT NOT NULL,
@@ -23,10 +12,10 @@ CREATE TABLE recipes(
 
 CREATE TABLE categories(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	name TEXT NOT NULL
+	categoryName TEXT NOT NULL
 );
 
-INSERT INTO categories(name)
+INSERT INTO categories(categoryName)
 	VALUES
 	('Appetizer'),
 	('Breakfast'),
