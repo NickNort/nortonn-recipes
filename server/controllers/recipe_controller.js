@@ -43,7 +43,31 @@ export const getRecipes = (req, res) => {
 export const getRecipe = (req, res) => {
 	console.log("===getRecipe===");
 	try {
-		db.all('SELECT * FROM recipes WHERE id = ?', [req.query.recipe_id]).then((rows) => {
+		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as category, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id WHERE r.id = ?', [req.query.recipe_id]).then((rows) => {
+			return res.json(rows);
+		});
+	} catch (error) {
+		console.log(error);
+		return res.send("An error occurred. Please try again.");
+	}
+}
+
+export const getRecipesSimple = (req, res) => {
+	console.log("===getRecipesSimple===");
+	try {
+		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id').then((rows) => {
+			return res.json(rows);
+		});
+	} catch (error) {
+		console.log(error);
+		return res.send("An error occurred. Please try again.");
+	}
+}
+
+export const getRecipeSimple = (req, res) => {
+	console.log("===getRecipeSimple===");
+	try {
+		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id WHERE r.id = ?', [req.query.recipe_id]).then((rows) => {
 			return res.json(rows);
 		});
 	} catch (error) {
@@ -55,7 +79,19 @@ export const getRecipe = (req, res) => {
 export const getRecipesByCategory = (req, res) => {
 	console.log("===getRecipesByCategory===");
 	try {
-		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as category, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ?', [req.query.category]).then((rows) => {
+		db.all('SELECT r.id as id, r.creator_id as creator_id, c.categoryName as categoryName, r.recipeName as recipeName, r.estimated_time as estimated_time, r.ingredients as ingredients, r.instructions as instructions FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ?', [req.query.category]).then((rows) => {
+			return res.json(rows);
+		});
+	} catch (error) {
+		console.log(error);
+		return res.send("An error occurred. Please try again.");
+	}
+}
+
+export const getRecipesByCategorySimple = (req, res) => {
+	console.log("===getRecipesByCategorySimple===");
+	try {
+		db.all('SELECT r.id as id, c.categoryName as categoryName, r.recipeName as recipeName FROM recipes r JOIN categories c ON r.category = c.id WHERE c.categoryName = ?', [req.query.category]).then((rows) => {
 			return res.json(rows);
 		});
 	} catch (error) {

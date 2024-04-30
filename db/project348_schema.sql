@@ -29,7 +29,6 @@ INSERT INTO categories(categoryName)
 	('Snack'),
 	('Soup');
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_categoryName ON categories(id, categoryName);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_recipeName ON recipes(id, recipeName, category);
 
 CREATE TABLE IF NOT EXISTS users(

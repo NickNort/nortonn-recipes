@@ -8,6 +8,7 @@ import ViewDb from './ViewDb';
 import UpdateEntry from './UpdateEntry';
 import DeleteEntry from './DeleteEntry';
 import UpdateEntryID from './UpdateEntryID';
+import ViewRecipe from './ViewRecipe';
 // import getRecipes from './ViewDb';
 
 // function MainPage() {
@@ -59,6 +60,7 @@ function App() {
           <Route path="/update-entry" element={<UpdateEntry />} />
           <Route path="/update-entry-id" element={<UpdateEntryID />} />
           <Route path="/delete-entry" element={<DeleteEntry />} />
+          <Route path="/view-recipe" element={<ViewRecipe />} />
         </Routes>
       </div>
     </Router>

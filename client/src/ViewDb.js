@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from './Components/Header';
+import { useNavigate } from 'react-router-dom';
 import './ViewDb.css';
 
 const ViewDb = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [categories, setCategories] = useState([]);
   	const [selectedCategory, setSelectedCategory] = useState('');
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		axios.get('http://localhost:8080/categories')
@@ -20,9 +23,11 @@ const ViewDb = () => {
 
 	useEffect(() => {
 		if (selectedCategory === '') {
-			axios.get('http://localhost:8080/recipes')
+			axios.get('http://localhost:8080/recipes/getRecipesSimple')
 				.then(response => {
 					setRecipes(response.data);
+					console.log("GetRecipesSimple");
+					console.log(response);
 				})
 				.catch(error => {
 					console.log(error);
@@ -31,6 +36,8 @@ const ViewDb = () => {
 			axios.get(`http://localhost:8080/recipes/getByCategory?category=${selectedCategory}`)
 				.then(response => {
 					setRecipes(response.data);
+					console.log("GetRecipesByCategorySimple");
+					console.log(response);
 				})
 				.catch(error => {
 					console.log(error);
@@ -38,11 +45,10 @@ const ViewDb = () => {
 		}
 	}, [selectedCategory]);
 
-	console.log("recipes:" + recipes);
 
 	return (
 		<>
-		<Header />
+			<Header />
 			<div className='recipes-title'>Recipes:</div>
 			<div className='category-selector'>
 				<select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
@@ -55,30 +61,28 @@ const ViewDb = () => {
 				</select>
 			</div>
 			<div className='table-container'>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Estimated Time</th>
-						<th>Category</th>
-						<th>Ingredients</th>
-						<th>Instructions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{recipes.map((recipe) => (
-						<tr key={recipe.id}>
-							<td>{recipe.id}</td>
-							<td>{recipe.recipeName}</td>
-							<td>{recipe.estimated_time}</td>
-							<td>{recipe.category}</td>
-							<td>{recipe.ingredients}</td>
-							<td>{recipe.instructions}</td>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Category</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{recipes.map((recipe) => (
+							<tr key={recipe.id}>
+								<td>{recipe.id}</td>
+								<td>
+									<button onClick={() => navigate(`/view-recipe?recipe_id=${recipe.id}`)}>
+										{recipe.recipeName}
+									</button>
+								</td>
+								<td>{recipe.categoryName}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
 			</div>
 		</>
 	);
