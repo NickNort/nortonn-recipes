@@ -1,4 +1,4 @@
-This is a project I did for my Information Systems class. The main focus of the project was database design and implementation, so the UI is kinda scuffed. Here's some screenshots:
+This is a project I did for my Information Systems class. This was made using the SERN stack (SQLite). The main focus of the project was database design and implementation, so the UI is kinda scuffed. Here's some screenshots:
 
 <img width="882" height="544" alt="image" src="https://github.com/user-attachments/assets/831ce8be-29cc-4394-b7b5-a6893acf3aa4" />
 <img width="942" height="753" alt="image" src="https://github.com/user-attachments/assets/fce9b558-ec64-4a14-b3f1-ea38cb4ece5d" />
